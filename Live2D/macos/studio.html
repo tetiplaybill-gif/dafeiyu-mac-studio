@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>小龙娘的小屋 · 主播工作台</title><link rel="stylesheet" href="/studio.css"><link rel="stylesheet" href="/stage-effects.css"></head>
+<body>
+<header class="app-header"><a class="brand" href="/"><span class="brand-icon">✦</span><span>小龙娘的小屋<small>主播工作台</small></span></a><div class="header-right"><span class="connection"><i></i>本机运行</span><button id="settingsButton" class="quiet">模型设置</button></div></header>
+<main class="workspace">
+ <section class="preview-column">
+  <div class="section-top"><div><span class="eyebrow">STAGE PREVIEW</span><h1>她的小世界</h1></div><a class="quiet" href="/stage" target="_blank" rel="noopener">打开纯净画面 ↗</a></div>
+  <div class="preview-shell"><div class="stage" id="stage">
+   <div class="room" id="room"></div><div class="room-light" aria-hidden="true"></div><div class="room-motes" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+   <div class="stage-heading"><span class="stage-label"><i></i> 排练中</span><time id="clock">00:00:00</time><h2>小龙娘的日常</h2><p>今天，也要好好吃饭呀。</p></div>
+   <div class="stage-stats"><span>这一场的小记</span><div>聊了几句 <b id="stageReplies">0</b></div><div>收到心意 <b id="stageGifts">0</b></div><small>本机互动记录 · 含排练</small></div>
+   <div class="stage-timer"><div><span id="stageTimerLabel">直播倒计时 · 待开始</span><strong id="stageCountdown">01:00:00</strong></div><div class="timer-side">礼物累计加时<b id="stageAdded">+00:00</b><small>按互动规则加时</small></div><div id="bonusToast" class="bonus-toast" aria-live="polite"></div></div>
+   <div class="stage-gifts" id="stageGiftGuide"></div>
+   <div class="speech-bubble" id="bubble"><div class="bubble-speaker"><span class="mini-star">✧</span><span id="speaker">小龙娘</span><span id="speakingBadge" class="speaking-badge">说话中</span></div><p id="caption">欢迎来到小龙娘的小屋。</p><div class="thinking-dots" id="thinking"><i></i><i></i><i></i></div></div>
+   <div id="actor" class="actor"><div class="pet-ground"></div><div id="petBody" class="pet-body"><img id="character" class="character" alt="正在待机的小龙娘" src="/character/idle.webp"></div><div class="gift-sparkles" aria-hidden="true">✦<i>♪</i><b>✧</b></div></div>
+   <div class="stage-foreground" aria-hidden="true"></div><div class="stage-footer"><span>✧ AI 角色 · AI 合成语音</span><span id="actionLabel">自在待机</span></div>
+  </div></div>
+  <p class="preview-note">画面为 9:16 竖屏。声音由这台 Mac 播放，打开多个画面不会重复播音。</p>
+ </section>
+ <section class="console-column">
+  <div class="console-title"><div><span class="eyebrow">YOUR LITTLE COMPANION</span><h2>让小龙娘开口吧</h2></div><span class="status-pill" id="statusPill">准备好了</span></div>
+  <div class="notice" id="notice" role="status" hidden></div>
+  <div class="panel" style="padding:0;overflow:hidden"><iframe id="danmakuPanel" title="真实弹幕接入" src="http://127.0.0.1:18768/" style="display:block;width:100%;height:780px;border:0"></iframe></div>
+  <div class="panel talk-panel"><div class="tabs"><button class="tab selected" data-mode="say">台词播报</button><button class="tab" data-mode="chat">AI 对话</button></div>
+   <label class="field-label" for="message" id="messageLabel">写一句想让她说的话</label><textarea id="message" maxlength="600" rows="4" placeholder="今天也辛苦啦，来陪我吃一块小饼干吧。"></textarea>
+   <div class="composer-foot"><span id="composerHint">使用 Mac 中文语音</span><button id="send" class="primary">让她说出来 <span>↗</span></button></div>
+   <div class="quick-lines"><button data-line="欢迎来到我的小屋，我是小龙娘。今天想和我聊些什么呢？">打个招呼</button><button data-line="谢谢你一直陪着我。忙了一天，也要记得好好吃饭哦。">温柔提醒</button><button id="stop" class="stop">■ 停止播报</button></div>
+  </div>
+  <div class="panel voice-panel"><div class="panel-heading"><div><h3>让声音更有温度</h3><p id="voiceStatus">检查语音设置中</p></div><button id="voiceSettings" class="quiet">音色与语速</button></div><button id="voicePreview" class="quiet">▷ 试听一句</button><span class="inline-note" id="voiceHint">自然语音使用已有 OpenAI API 密钥</span></div>
+  <div class="panel timer-panel"><div class="panel-heading"><div><h3>礼物加时</h3><p>到时提醒，不会自动结束平台直播</p></div><strong class="timer-display" id="consoleCountdown">01:00:00</strong></div><div class="timer-controls"><label for="initialMinutes">起始分钟 <input id="initialMinutes" type="number" min="1" max="1440" value="60"></label><button id="timerReset" class="quiet">重设</button><button id="timerToggle" class="primary">开始计时</button></div><p class="timer-meta" id="timerMeta">还没开始计时</p><details class="gift-rules"><summary>调整每种礼物的加时和动作</summary><div id="giftRules"></div><button id="saveGiftRules" class="quiet">保存礼物规则</button><span id="rulesMessage" role="status"></span></details></div>
+  <div class="panel"><div class="panel-heading"><div><h3>小动作，大心情</h3><p>直接使用你已安装的小龙娘动画</p></div><span class="count" id="actionCount">—</span></div><div class="action-grid" id="actions"></div></div>
+  <div class="panel gift-panel"><div class="panel-heading"><div><h3>礼物互动排练</h3><p>送礼物 → 加时 → 动作 → 感谢播报</p></div><span class="tiny-tag">模拟礼物</span></div><div class="gift-grid"><button data-gift="人气票"><span>🍪</span>吃饼干<small></small></button><button data-gift="小心心"><span>💗</span>爱心舞<small></small></button><button data-gift="玫瑰"><span>🌹</span>移动招手<small></small></button><button data-gift="大啤酒"><span>🎉</span>庆祝舞<small></small></button><button data-gift="加油鸭"><span>🐉</span>活力舞<small></small></button></div><div class="motion-controls"><button class="quiet" data-motion="dance">♫ 试跳一段</button><button class="quiet" data-motion="roam">↔ 舞台走位</button><label><input type="checkbox" id="depthMotion" checked> 景深视差</label></div><p class="motion-note">舞台编排使用现有整段动画；原素材暂无独立迈腿或舞蹈片段。</p></div>
+  <div class="panel activity-panel"><div class="panel-heading"><h3>小屋动态</h3><span id="queueCount">没有等待中的消息</span></div><div id="events" class="events"><p class="empty">还很安静，先和她打个招呼吧。</p></div></div>
+  <div class="console-footer"><span><i class="dot"></i><b id="modelStatus">GPT-6.1 Terra 尚未连接</b></span><span id="tokenCount"></span></div>
+  <p class="boundary-note">当前为本地排练，尚未连接真实抖音弹幕。现有角色使用整段动画，动作联动不等同于逐字嘴型同步。</p>
+ </section>
+</main>
+<dialog id="settings"><form id="settingsForm"><button class="close" type="button" id="closeSettings" aria-label="关闭">×</button><span class="eyebrow">VOICE & MODEL</span><h2>声音与对话</h2><p>复用已有 OpenAI API 密钥，仅保存在本次运行的内存中。</p><label class="field-label" for="apiKey">OpenAI API 密钥 · 已配置时留空保留</label><input id="apiKey" type="password" autocomplete="off" spellcheck="false" placeholder="在本机粘贴已有密钥" maxlength="512"><label class="field-label" for="voiceEngine">语音来源</label><select id="voiceEngine"><option value="auto">自然语音优先 · 无密钥时离线朗读</option><option value="openai">OpenAI 自然语音</option><option value="native">Mac 离线朗读</option></select><div class="voice-options"><label class="field-label" for="voiceName">音色<select id="voiceName"><option value="marin">Marin · 柔和</option><option value="coral">Coral · 明亮</option><option value="shimmer">Shimmer · 轻盈</option></select></label><label class="field-label" for="voiceStyle">表达<select id="voiceStyle"><option value="gentle">温柔陪伴</option><option value="bright">俏皮互动</option><option value="calm">舒缓叙述</option></select></label></div><label class="field-label" for="voiceSpeed">语速 <output id="speedValue">0.95×</output></label><input id="voiceSpeed" type="range" min="0.8" max="1.2" step="0.05" value="0.95"><p class="settings-note">对话仍使用 GPT-6.1 Terra；自然语音使用 GPT-Realtime-2.1 Mini。试听、台词和礼物感谢会产生语音 API 用量。离线模式不产生用量，表达风格仅对自然语音生效。更改会在下一句生效。</p><div class="dialog-actions"><button type="button" id="disconnect" class="quiet">断开连接</button><button class="primary" type="submit">保存设置</button></div><p class="form-message" id="settingsMessage" role="status"></p></form></dialog>
+<script src="/studio.js"></script></body></html>

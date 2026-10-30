@@ -1,0 +1,22 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>真实弹幕接入 · 小龙娘</title>
+<style>
+*{box-sizing:border-box}body{margin:0;padding:18px;background:#fffefa;color:#48483e;font:13px -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif}h1{font-size:16px;font-weight:600;margin:0}p{font-size:11px;line-height:1.7;color:#918773;margin:8px 0}.heading{display:flex;justify-content:space-between;gap:10px;align-items:center}.pill{font-size:10px;border-radius:20px;background:#eef0e5;color:#64795d;padding:5px 9px;white-space:nowrap}input,button{font:inherit}input[type=text]{width:100%;background:#f7f5ed;border:1px solid #e4dfd1;border-radius:8px;padding:11px;margin:8px 0;color:#554f42}button{padding:9px 12px;border:1px solid #dcded0;border-radius:7px;color:#667958;background:#f7f8ef;cursor:pointer;font-size:12px}.primary{background:#57755e;color:white;border:0}button:disabled{opacity:.6;cursor:wait}.controls,.options,.stats{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.options{margin:12px 0;font-size:11px;color:#796f5d}.options input[type=number]{width:48px;border:1px solid #ded8ca;padding:5px;border-radius:5px;color:#635a4a}.options input[type=checkbox]{accent-color:#57755e;vertical-align:middle}.stats{border-top:1px solid #ebe6dc;margin-top:14px;padding-top:11px;font-size:11px;color:#8a826e}.stats b{color:#526e50;margin-left:4px}.error{color:#9b6337;background:#fff0de;padding:9px;border-radius:6px}.error:empty{display:none}.events{max-height:150px;overflow:auto;margin-top:10px}.event{padding:7px 0;border-top:1px solid #f0ede6;font-size:11px;line-height:1.6}.event b{color:#698164;font-weight:500}.event span{margin:0 7px;overflow-wrap:anywhere}.event small{color:#a19988}.empty{color:#a49b8a}a{color:#607c5d;text-decoration:none}.foot{margin-bottom:0}@media(min-width:700px){body:not(.embedded){max-width:720px;margin:40px auto;border:1px solid #e6e2d6;border-radius:14px}}
+</style></head><body>
+<div class="heading"><h1>真实弹幕接入</h1><span id="status" class="pill">连接中</span></div>
+<p id="description">打开你的直播间网页，接收新弹幕并转给小龙娘。</p>
+<label for="room">直播间链接或房间号</label><input id="room" type="text" placeholder="https://live.douyin.com/你的房间号" autocomplete="off" maxlength="500">
+<div class="controls"><button id="connect" class="primary">连接直播间</button><button id="disconnect">断开采集</button><a href="http://127.0.0.1:18766/" target="_blank" rel="noopener">工作台 ↗</a></div>
+<div class="options"><label><input id="auto" type="checkbox" checked> 自动语音回复</label><label>至少间隔 <input id="interval" type="number" value="8" min="5" max="60"> 秒</label><button id="apply">应用</button></div>
+<div class="options"><label><input id="welcome" type="checkbox" checked> 进场主动欢迎</label><label><input id="idle" type="checkbox" checked> 空闲小动作</label><label>约每 <input id="idleInterval" type="number" value="45" min="30" max="180"> 秒</label></div>
+<div class="options"><label><input id="gift" type="checkbox" checked> 真实礼物互动 · 感谢、加时与动作</label></div>
+<p>进场欢迎优先让开弹幕，每人 5 分钟内一次、欢迎间隔至少 20 秒。小动作只在空闲时随机播放，不消耗 API。修改后点「应用」。</p>
+<p>回复、欢迎和礼物感谢会使用已配置的语音服务，产生 API 用量。各开关分别控制；正在播报的一句继续完成。</p>
+<div id="error" class="error" role="status"></div>
+<div class="stats"><span>收到新弹幕<b id="received">0</b></span><span>送入 AI<b id="forwarded">0</b></span><span>等待<b id="pending">0</b></span></div>
+<div class="stats"><span>新进场<b id="entrances">0</b></span><span>送入欢迎播报<b id="welcomes">0</b></span><span>小动作<b id="idleCount">0</b></span></div>
+<div class="stats"><span>真实礼物<b id="giftUnits">0</b> 份</span><span>送入礼物互动<b id="giftForwarded">0</b> 份</span><span>等待<b id="giftPending">0</b> 组</span></div>
+<p id="giftStatus">等待真实礼物。按已有礼物规则加时；未配置的礼物仅感谢与庆祝。</p>
+<p id="activityStatus">等待新的进场事件；空闲时播放小动作。</p>
+<div id="events" class="events"><p class="empty">等待观众发送新弹幕。这里只显示实际收到的消息。</p></div>
+<p class="foot">采集窗口保持开启并静音；网页要求登录或验证时，请在采集窗口完成。下方「礼物互动排练」按钮仍是模拟事件。</p>
+<script src="/danmaku.js"></script></body></html>

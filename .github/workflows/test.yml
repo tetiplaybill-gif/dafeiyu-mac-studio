@@ -1,0 +1,31 @@
+name: Offline tests
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  macos:
+    runs-on: macos-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - name: Runtime versions
+        run: |
+          python3 --version
+          node --version
+      - name: Python offline tests
+        run: python3 -m unittest discover -s tests/macos -v
+      - name: Node offline tests
+        run: node --test tests/macos/test_danmaku.cjs tests/macos/test_host_activity.cjs tests/macos/test_gifts.cjs
+      - name: Syntax and whitespace
+        run: |
+          node --check tools/mac_danmaku.cjs
+          node --check Live2D/macos/studio.js
+          node --check Live2D/macos/danmaku.js
+          git diff --check
